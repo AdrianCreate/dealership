@@ -14,7 +14,7 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
-import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
@@ -45,7 +45,7 @@ export class UsersController {
   }
 
   @Post('/signout')
-  signOut(@Session() session: any) {
+  signout(@Session() session: any) {
     session.userId = null;
   }
 
@@ -57,7 +57,7 @@ export class UsersController {
   }
 
   @Post('/signin')
-  async signIn(@Body() body: CreateUserDto, @Session() session: any) {
+  async signin(@Body() body: CreateUserDto, @Session() session: any) {
     const user = await this.authService.signin(body.email, body.password);
     session.userId = user.id;
     return user;
@@ -73,7 +73,7 @@ export class UsersController {
   }
 
   @Get()
-  findAllUser(@Query('email') email: string) {
+  findAllUsers(@Query('email') email: string) {
     return this.usersService.find(email);
   }
 
